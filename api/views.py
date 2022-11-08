@@ -1,6 +1,7 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import *
@@ -10,6 +11,7 @@ from .serializers import *
 # Create your views here.
 
 class VideoView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Video.objects.all()
     serializer_class = VideoSerial
 
@@ -22,6 +24,7 @@ class VideoView(ListCreateAPIView):
 
 
 class VideoDetail(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Video.objects.all()
     serializer_class = VideoSerial
 
@@ -32,11 +35,13 @@ class VideoDetail(RetrieveUpdateDestroyAPIView):
 
 
 class CategoryView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     serializer_class = CategorySerial
 
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     serializer_class = CategorySerial
 
@@ -47,6 +52,7 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def video_category_detail(request, pk):
     category = Category.objects.get(pk=pk)
     video = Video.objects.filter(category=category)

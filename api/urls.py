@@ -3,13 +3,14 @@ from .views import *
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
-    TokenRefreshView,
+    TokenRefreshView
 )
 
 urlpatterns = [
     # Token PATH
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('validate/', validate_token, name='validate_token'),
     # API PATH
     path('videos/', VideoView.as_view(), name="video-view"),
     path('videos/<str:pk>/', VideoDetail.as_view(), name="video-detail"),

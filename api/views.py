@@ -1,14 +1,14 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import *
 from .serializers import *
 
 
 # Create your views here.
+
 
 class VideoView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -59,3 +59,8 @@ def video_category_detail(request, pk):
     serializer = VideoSerial(video, many=True)
     return Response(serializer.data) if len(video) > 0 else Response("No Videos in this Category",
                                                                      status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def validate_token(request):
+    return Response("Token Validated")

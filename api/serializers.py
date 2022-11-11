@@ -20,7 +20,7 @@ class VideoSerial(ModelSerializer):
             category = validated_data.pop('category')
             name = Category.objects.get(title=category)
         else:
-            name = Category.objects.get_or_create(title="LIVRE", color="white")
+            name, created = Category.objects.get_or_create(title="LIVRE", color="white")
         video = Video.objects.create(**validated_data, category=name)
         return video
 

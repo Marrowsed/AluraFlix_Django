@@ -11,6 +11,7 @@ from .serializers import *
 
 
 class VideoView(ListCreateAPIView):
+    """Endpoint to GET/POST a Video"""
     permission_classes = [IsAuthenticated]
     queryset = Video.objects.all()
     serializer_class = VideoSerial
@@ -24,6 +25,7 @@ class VideoView(ListCreateAPIView):
 
 
 class VideoDetail(RetrieveUpdateDestroyAPIView):
+    """Endpoint to GET/PUT/PATCH/DELETE a Video ID"""
     permission_classes = [IsAuthenticated]
     queryset = Video.objects.all()
     serializer_class = VideoSerial
@@ -35,12 +37,14 @@ class VideoDetail(RetrieveUpdateDestroyAPIView):
 
 
 class CategoryView(ListCreateAPIView):
+    """Endpoint to GET/POST a Category"""
     permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     serializer_class = CategorySerial
 
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    """Endpoint to GET/PUT/PATCH/DELETE a Category ID"""
     permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     serializer_class = CategorySerial
@@ -50,17 +54,29 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
         self.perform_destroy(instance)
         return Response("Category Deleted", status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def categories_has_videos(request):
+    """Endpoint to see Categories and its Videos"""
+    category = Category.objects.all()
+    serializer = PlaylistSerial(category, many=True)
+    return Response(serializer.data)
+
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def video_category_detail(request, pk):
+    """Endpoint to see Videos by Category"""
     category = Category.objects.get(pk=pk)
     video = Video.objects.filter(category=category)
     serializer = VideoSerial(video, many=True)
     return Response(serializer.data) if len(video) > 0 else Response("No Videos in this Category",
                                                                      status=status.HTTP_404_NOT_FOUND)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def validate_token(request):
+    """Endpoint to validate Token"""
     return Response("Token Validated")

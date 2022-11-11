@@ -14,3 +14,14 @@ class VideoSerial(ModelSerializer):
     class Meta:
         model = Video
         fields = ['id', 'title', 'description', 'url', 'category_name']
+
+
+class PlaylistSerial(ModelSerializer):
+    videos = VideoSerial(
+        many=True,
+        read_only=True,
+     )
+
+    class Meta:
+        model = Category
+        fields = ['id', 'title', 'color', 'videos']

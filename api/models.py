@@ -26,7 +26,7 @@ class Video(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     url = models.URLField(max_length=200, null=False, blank=False)
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=livre.id, null=False, blank=False, related_name='videos')
+    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=livre.title, null=True, blank=True, related_name='videos')
 
 
     def __str__(self):

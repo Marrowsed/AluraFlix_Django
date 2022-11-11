@@ -54,6 +54,7 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
         self.perform_destroy(instance)
         return Response("Category Deleted", status=status.HTTP_204_NO_CONTENT)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def categories_has_videos(request):
@@ -61,7 +62,6 @@ def categories_has_videos(request):
     category = Category.objects.all()
     serializer = PlaylistSerial(category, many=True)
     return Response(serializer.data)
-
 
 
 @api_view(['GET'])

@@ -31,13 +31,14 @@ class PlaylistSerial(ModelSerializer):
     videos = VideoSerial(
         many=True,
         read_only=True,
-     )
+    )
 
     class Meta:
         model = Category
         fields = ['id', 'title', 'color', 'videos']
 
+
 class UserSerial(ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'is_active']

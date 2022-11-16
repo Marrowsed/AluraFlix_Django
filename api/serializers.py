@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from .models import *
 from rest_framework.serializers import *
 
@@ -34,3 +36,8 @@ class PlaylistSerial(ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'title', 'color', 'videos']
+
+class UserSerial(ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"

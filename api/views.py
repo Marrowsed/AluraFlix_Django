@@ -1,8 +1,9 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db.models import Count
 
 from .serializers import *
 
@@ -59,7 +60,7 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
 @permission_classes([IsAuthenticated])
 def categories_has_videos(request):
     """Endpoint to see Categories and its Videos"""
-    category = Category.objects.all()
+    category = Category.objects.annotate(video_qt=Count('title')).order_by('video_qt')
     serializer = PlaylistSerial(category, many=True)
     return Response(serializer.data)
 
@@ -80,3 +81,15 @@ def video_category_detail(request, pk):
 def validate_token(request):
     """Endpoint to validate Token"""
     return Response("Token Validated")
+
+
+class UserCreate(CreateAPIView):
+    """Endpoint to create users"""
+    queryset = User.objects.all()
+    serializer_class = UserSerial
+
+
+class UserList(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerial

@@ -30,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY', default='g-sq)oicn!1aa$728sg8gq2czx6fqbiku3z1u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

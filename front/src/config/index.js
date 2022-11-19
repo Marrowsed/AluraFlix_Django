@@ -1,4 +1,4 @@
-const URL = "http://127.0.0.1:8000/api/"
+const URL = "https://aluraflixdjango-production.up.railway.app/api/"
 
 const generateToken = async (user, pass) => {
     let response = await fetch(`${URL}token/`,
